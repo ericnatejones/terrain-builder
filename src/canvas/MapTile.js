@@ -11,17 +11,16 @@ export default function MapTile(props) {
     const jClickedDiff = props.j - props.clickedTile.row
     const iClickedDiff = props.i - props.clickedTile.col
     
+    const style = {}
 
     if(jClickedDiff >= 0 && jClickedDiff <= jSelecetedDiff && iClickedDiff >= 0 && iClickedDiff <= iSelecetedDiff){ 
-        setTileSprite({
-            class: "tile", 
-            backgroundPosition: `-${(jSelecetedDiff + jClickedDiff) * 32}px -${(iSelecetedDiff + iClickedDiff ) * 32}px`
-        })
+        style.class = "tile"
+        style.backgroundPosition = `-${(jSelecetedDiff + jClickedDiff) * 32}px -${(iSelecetedDiff + iClickedDiff ) * 32}px`
     }
 
     return (
         <div 
-            className={`game-tile ${tileSprite.class}`}
+            className={`game-tile ${tileSprite.class} ${style.class ? "tile" : ""}`}
             style={tileSprite}
             onDoubleClick={()=>setMenuToggle(true)}
             onClick={()=>props.handleTileClick({row: props.j, col: props.i})}>
