@@ -1,22 +1,38 @@
 .App {
-  text-align: center;
+    text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
+.form-layout {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 100px
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+form {
+    display: inline;
+}
+  
+textarea {
+    font-family:Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New, monospace;
 }
 
-.App-link {
-  color: #09d3ac;
+.tileSheet {
+    margin-top: 50px;
+    display: grid;
+    grid-template-columns: repeat(32, 32px);
+    grid-template-rows: repeat(32, 32px);
+}
+
+.tile {
+    background-image: url(./assets/terrain_atlas.png);
+}
+
+.game-tile {
+    border: black 1px dotted    
+}
+
+.map-container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
 }
