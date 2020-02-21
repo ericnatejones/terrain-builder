@@ -17,6 +17,12 @@ export default function TileSheet(props) {
     }
 
     const handleMouseUp = () => {
+        const colStart = Math.min(props.selected.colStart, props.selected.colEnd)
+        const rowStart = Math.min(props.selected.rowStart, props.selected.rowEnd)
+        const colEnd = Math.max(props.selected.colStart, props.selected.colEnd)
+        const rowEnd = Math.max(props.selected.rowStart, props.selected.rowEnd)
+        props.handleEndChange({rowEnd, colEnd})
+        props.handleStartChange({rowStart, colStart})
         setIsMouseDown(false)
     }
 

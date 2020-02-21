@@ -3,26 +3,15 @@ import Sliders from "./Sliders"
 import Map from "./Map"
 import {ToggleContext} from "../context/toggleContext"
 
-function makeMatrix(cols, rows){
-    const matrix = []
-    for(let i = 0; i < cols; i++){
-        matrix.push([])
-        for(let j = 0; j < rows; j++){
-            matrix[i].push([])
-        }
-    }
-    return matrix
-}
-
 export default function CanvasContainer(props) {
     const {tooltipOn, toggleTooltip} = useContext(ToggleContext)
 
-    const [map, setMap] = useState(makeMatrix(10, 30))
+    const [map, setMap] = useState({cols:10, rows:10})
     
 
     const handleSubmit = (e, rows, cols) => {
         e.preventDefault()
-        setMap(makeMatrix(cols, rows))
+        setMap({cols, rows})
     }
     
     return (

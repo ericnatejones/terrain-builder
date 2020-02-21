@@ -30,8 +30,8 @@ export default function Map(props) {
 
     const styles = {
         display: "grid",
-        gridTemplateColumns: `repeat(${props.grid[0].length}, 32px)`,
-        gridTemplateRows: `repeat(${props.grid.length}, 32px)`
+        gridTemplateColumns: `repeat(${props.grid.cols}, 32px)`,
+        gridTemplateRows: `repeat(${props.grid.rows}, 32px)`
     }
 
     const {colStart, rowStart, colEnd, rowEnd} = props.selected
@@ -39,41 +39,39 @@ export default function Map(props) {
     const rowDiff = Math.abs(rowEnd - rowStart)
     const colDiff = Math.abs(colEnd - colStart)
 
-    const map = props.grid.map((row, i) => {
-        return (
-            <Fragment key={i}>
-                {row.map((tile, j) => {
+    const map = []
 
-                    const position = {}
+    for(let i = 0; i < props.grid.rows; i++){
+        const rows = []
+        for(let j = 0; j < props.grid.cols; j++){
+            const position = {}
 
-                    const jDiff = j - clicked.row
-                    const iDiff = i - clicked.col
-                    
-                    if (j >= clicked.row && 
-                        j <= clicked.row + rowDiff && 
-                        i >= clicked.col &&
-                        i <= clicked.col + colDiff &&
-                        props.ready
-                    ){
-                        position.row = rowStart + jDiff
-                        position.col = colStart + iDiff
-                    } 
-
-                    return (
-                        <MapTile 
-                            key={`${i}${j}`} 
-                            i={i}
-                            j={j}
-                            position={position}
-                            handleTileClick={setClicked}
-                            setEraserOn={setEraserOn}
-                            eraserOn={eraserOn}
-                        />
-                    )
-                })}
-            </Fragment>
-        )
-    })
+            const jDiff = j - clicked.row
+            const iDiff = i - clicked.col
+            
+            if (j >= clicked.row && 
+                j <= clicked.row + rowDiff && 
+                i >= clicked.col &&
+                i <= clicked.col + colDiff &&
+                props.ready
+            ){
+                position.row = rowStart + jDiff
+                position.col = colStart + iDiff
+            } 
+            rows.push(
+            <MapTile 
+                key={`${i}${j}`} 
+                i={i}
+                j={j}
+                position={position}
+                handleTileClick={setClicked}
+                setEraserOn={setEraserOn}
+                eraserOn={eraserOn}
+            />
+            )
+        }
+        map.push(<Fragment key={i}>{rows}</Fragment>)
+    }
 
     return (
         <>  

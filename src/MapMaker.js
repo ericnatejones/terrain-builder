@@ -25,6 +25,7 @@ export default function MapMaker() {
             <div className="map-container">
             <TileSheet  selected={{...selected, ...selectedEnd}} 
                         handleMouseDown={handleMouseDown}
+                        handleStartChange={setSelected} 
                         handleEndChange={setSelectedEnd} 
                         setIsReadyToPlace={setIsReadyToPlace}
                         areToolTipsOn={areToolTipsOn}/>
