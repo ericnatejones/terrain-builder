@@ -1,6 +1,7 @@
-import React, {useState} from 'react'
+import React, {useState, useContext} from 'react'
 import Sliders from "./Sliders"
 import Map from "./Map"
+import {ToggleContext} from "../context/toggleContext"
 
 function makeMatrix(cols, rows){
     const matrix = []
@@ -14,7 +15,10 @@ function makeMatrix(cols, rows){
 }
 
 export default function CanvasContainer(props) {
+    const {tooltipOn, toggleTooltip} = useContext(ToggleContext)
+
     const [map, setMap] = useState(makeMatrix(10, 30))
+    
 
     const handleSubmit = (e, rows, cols) => {
         e.preventDefault()
@@ -23,11 +27,18 @@ export default function CanvasContainer(props) {
     
     return (
         <div>
-        <div className="form-layout">
-                <Sliders handleSlidersSubmit={handleSubmit}/>
+            <div className="form-layout">
+                <Sliders areToolTipsOn={props.areToolTipsOn} handleSlidersSubmit={handleSubmit}/>
             </div>
             <div className="map-container">
-                <Map grid={map} selected={props.selected}/> 
+                <button onClick={toggleTooltip}>
+                    {!tooltipOn && "Turn"} Tool Tips {!tooltipOn && "On"}
+                </button>
+                <Map grid={map} 
+                    setReady={props.setReady}
+                    selected={props.selected} 
+                    ready={props.ready} 
+                    areToolTipsOn={props.areToolTipsOn}/> 
             </div>
         </div>
     )

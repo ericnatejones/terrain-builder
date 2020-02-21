@@ -1,30 +1,38 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 
 export default function MapTile(props) {
-    const [tileSprite, setTileSprite] = useState({class: "none"})
-    const [menuToggle, setMenuToggle] = useState(false)
+    const [isSet, setIsSet] = useState(false)
 
+    useEffect(()=>{
+        if(!isSet && props.position.row && !props.eraserOn){
+            setIsSet(true)
+        }
+    }, [props.position.row, props.j, isSet, props.eraserOn])
 
-     
-    const jSelecetedDiff = Math.abs(props.selected.rowStart - props.selected.rowEnd) 
-    const iSelecetedDiff = Math.abs(props.selected.colStart - props.selected.colEnd) 
-    const jClickedDiff = props.j - props.clickedTile.row
-    const iClickedDiff = props.i - props.clickedTile.col
+    const handleClick = () => {
+        props.handleTileClick({row: props.j, col: props.i})
+    }
+
+    const handleMouseOver = () => {
+        if(props.eraserOn){
+            setIsSet(false)    
+        }
+    }
     
     const style = {}
 
-    if(jClickedDiff >= 0 && jClickedDiff <= jSelecetedDiff && iClickedDiff >= 0 && iClickedDiff <= iSelecetedDiff){ 
-        style.class = "tile"
-        style.backgroundPosition = `-${(jSelecetedDiff + jClickedDiff) * 32}px -${(iSelecetedDiff + iClickedDiff ) * 32}px`
+    if(isSet){
+        style.backgroundPosition = `-${props.position.row * 32}px -${props.position.col * 32}px`
+    } else {
+        style.background = "none"
     }
 
     return (
-        <div 
-            className={`game-tile ${tileSprite.class} ${style.class ? "tile" : ""}`}
-            style={tileSprite}
-            onDoubleClick={()=>setMenuToggle(true)}
-            onClick={()=>props.handleTileClick({row: props.j, col: props.i})}>
-            {menuToggle && <div onClick={()=>setTileSprite({class: "none"})}>remove tile</div>}
+        <div
+            style={style} 
+            className={`game-tile ${isSet ? "tile" : null}`}
+            onClick={handleClick}
+            onMouseOver={handleMouseOver}>
         </div>
     )
 }

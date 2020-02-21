@@ -1,18 +1,23 @@
 import React, {useState} from 'react'
+import Tooltip from './components/Tooltip';
 
 export default function TileSheet(props) {
     const [isMouseDown, setIsMouseDown] = useState(false)
 
     const handleMouseDown = (j, i) => {
+        props.setIsReadyToPlace(false)
         setIsMouseDown(true)
         props.handleMouseDown(j, i)
-
     }
 
     const handleMouseEnter = (j, i) => {
         if (isMouseDown) {
             props.handleEndChange({rowEnd: j, colEnd: i})
         }
+    }
+
+    const handleMouseUp = () => {
+        setIsMouseDown(false)
     }
 
     const tileMap = []
@@ -39,7 +44,7 @@ export default function TileSheet(props) {
                         style={style} 
                         className="tile" 
                         onMouseDown={()=>handleMouseDown(j, i)}
-                        onMouseUp={()=>setIsMouseDown(false)}
+                        onMouseUp={handleMouseUp}
                         onMouseEnter={()=>handleMouseEnter(j, i)}
                     ></div>
             }
@@ -49,8 +54,11 @@ export default function TileSheet(props) {
     }
 
     return (
-        <div className="tileSheet">
-            {tileMap.map(tile=>tile.jsx)}
-        </div>
+        <Tooltip tip="click a tile, or click and drag to selected a rectangle. Then click in the canvas to place terrain">
+            <div onMouseLeave={()=>{setIsMouseDown(false)}} className="tileSheet" >
+                {tileMap.map(tile=>tile.jsx)}
+            </div>
+        </Tooltip>
     )
 }
+
