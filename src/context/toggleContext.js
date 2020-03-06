@@ -1,5 +1,5 @@
-import React, {useState} from 'react'
-const ToggleContext = React.createContext()
+import React, {useState, createContext} from 'react'
+const ToggleContext = createContext()
 
 function ToggleContextProvider(props) {
     // default to true in development

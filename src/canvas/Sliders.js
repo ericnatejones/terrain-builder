@@ -3,8 +3,8 @@ import Tooltip from '../components/Tooltip';
 
 
 export default function Sliders(props) {
-    const [rows, setRows] = useState(30)
-    const [cols, setCols] = useState(10)
+    const [rows, setRows] = useState(7)
+    const [cols, setCols] = useState(29)
 
     return (
         <div>

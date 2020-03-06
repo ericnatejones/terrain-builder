@@ -3,7 +3,7 @@ import MapTile from './MapTile'
 import Tooltip from '../components/Tooltip';
 
 export default function Map(props) {
-
+    
     const [clicked, setClicked] = useState({row: 0, col: 0})
     const [eraserOn, setEraserOn] = useState(false)
 

@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import TileSheet from "./TileSheet"
+import TileSheet from "./tileSheet/TileSheet"
 import CanvasContainer from './canvas/CanvasContainer';
 
 

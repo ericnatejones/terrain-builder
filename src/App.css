@@ -1,4 +1,23 @@
+@font-face {
+    font-family: DandD;
+    src: url(./assets/DnDC.ttf);
+}
+
+body {
+    font-family: DandD;
+    font-size: 18px;
+    background-color: #cbcbcb;
+}
+
+button {
+    font-family: DandD;
+    font-size: 18px;
+    background-color: #b88651;
+    margin-bottom: 13px;
+}
+
 .App {
+    
     text-align: center;
 }
 

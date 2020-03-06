@@ -6,9 +6,8 @@ import {ToggleContext} from "../context/toggleContext"
 export default function CanvasContainer(props) {
     const {tooltipOn, toggleTooltip} = useContext(ToggleContext)
 
-    const [map, setMap] = useState({cols:10, rows:10})
+    const [map, setMap] = useState({cols:29, rows:7})
     
-
     const handleSubmit = (e, rows, cols) => {
         e.preventDefault()
         setMap({cols, rows})

@@ -1,19 +1,23 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useContext} from 'react'
+import {selectionContext} from '../context/selectionContext'
 
 export default function MapTile(props) {
     const [isSet, setIsSet] = useState(false)
+    const {selectionClickPosition} = useContext(SelectionContext)
 
     useEffect(()=>{
-        if(!isSet && props.position.row && !props.eraserOn){
+        const {row} = props.position
+        if(!isSet && (row === 0 || row) && !props.eraserOn){
             setIsSet(true)
         }
-    }, [props.position.row, props.j, isSet, props.eraserOn])
+    }, [props.position.row, props.j, isSet, props.eraserOn, props.position])
 
     const handleClick = () => {
         props.handleTileClick({row: props.j, col: props.i})
     }
 
     const handleMouseOver = () => {
+        console.log("over")
         if(props.eraserOn){
             setIsSet(false)    
         }
