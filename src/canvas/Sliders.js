@@ -10,7 +10,7 @@ export default function Sliders(props) {
         <div>
             <Tooltip 
                 position="top"
-                distance="30"
+                distance="85"
                 tip="use sliders to submit how many rows and columns your map will have. Use arrow keys to adjust slider">
             <form onSubmit={(e)=>props.handleSlidersSubmit(e, rows, cols)}>
                 Rows: {rows}<input 

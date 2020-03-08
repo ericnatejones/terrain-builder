@@ -1,9 +1,10 @@
 import React, {useState, useEffect, useContext} from 'react'
-import {selectionContext} from '../context/selectionContext'
+import {SelectionContext} from '../context/selectionContext'
 
 export default function MapTile(props) {
     const [isSet, setIsSet] = useState(false)
-    const {selectionClickPosition} = useContext(SelectionContext)
+    const {selectionClickPosition, setSelectionClickPosition,
+           draggingStage, setDraggingStage} = useContext(SelectionContext)
 
     useEffect(()=>{
         const {row} = props.position
@@ -12,14 +13,27 @@ export default function MapTile(props) {
         }
     }, [props.position.row, props.j, isSet, props.eraserOn, props.position])
 
-    const handleClick = () => {
-        props.handleTileClick({row: props.j, col: props.i})
+    useEffect(()=>{
+        setIsSet(false)
+    }, [props.isReset])
+
+    const handlePlace = () => {
+        props.handlePlacement({
+            row: props.j - selectionClickPosition.x, 
+            col: props.i - selectionClickPosition.y
+        })
     }
 
     const handleMouseOver = () => {
-        console.log("over")
         if(props.eraserOn){
             setIsSet(false)    
+        }
+        if(draggingStage === "ready to place"){
+            handlePlace()
+            setDraggingStage("pre") 
+            setSelectionClickPosition({x:0,y:0})
+        } else {
+            props.handlePlacement({row: 33, col: 33})
         }
     }
     
@@ -35,8 +49,8 @@ export default function MapTile(props) {
         <div
             style={style} 
             className={`game-tile ${isSet ? "tile" : null}`}
-            onClick={handleClick}
-            onMouseOver={handleMouseOver}>
+            onMouseOver={handleMouseOver}
+            onClick={handlePlace}>
         </div>
     )
 }

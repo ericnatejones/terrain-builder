@@ -3,7 +3,7 @@ const SelectionContext = createContext()
 
 function SelectionContextProvider(props) {
     const [selection, setSelection] = useState([])
-    const [isDragging,setIsDragging] = useState(false)
+    const [draggingStage, setDraggingStage] = useState("pre")
     const [selectionClickPosition, setSelectionClickPosition] = useState({x:0,y:0})
     const [pageX, setPageX] = useState(0)
     const [pageY, setPageY] = useState(0)
@@ -19,7 +19,7 @@ function SelectionContextProvider(props) {
 
     return (
         <SelectionContext.Provider value={{selection, holdSelection, 
-                                        setIsDragging, isDragging, 
+                                        setDraggingStage, draggingStage, 
                                         pageX, pageY, setPageXY,
                                         setSelectionClickPosition,
                                         selectionClickPosition}}>

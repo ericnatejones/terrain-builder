@@ -1,27 +1,37 @@
-import React, {Fragment, useState, useEffect} from 'react'
+import React, {Fragment, useState, useEffect, useContext} from 'react'
 import MapTile from './MapTile'
+import {SelectionContext} from '../context/selectionContext'
 import Tooltip from '../components/Tooltip';
 
 export default function Map(props) {
+    const {setDraggingStage} = useContext(SelectionContext)
     
-    const [clicked, setClicked] = useState({row: 0, col: 0})
+    const [dropped, setDropped] = useState({row: 33, col: 33})
     const [eraserOn, setEraserOn] = useState(false)
+    const [isReset, setIsReset] = useState(false)
 
     const handleEraserToggle = () => {
         setEraserOn(prevEraser => !prevEraser)
-        setClicked({row: 33, col: 33})
+        setDraggingStage("pre") 
+        setDropped({row: 33, col: 33})
+    }
+
+    const handleReset = () => {
+        setIsReset(true)
     }
 
     useEffect(()=>{
-        console.log("eefect")
+        console.log('reset')
+        setIsReset(false)
+    }, [isReset])
+
+    useEffect(()=>{
         window.addEventListener("keydown", (e)=>{
-            console.log(e.repeat)
             if(e.key === "e" && !e.repeat){
                 setEraserOn(true)
             }
         })
         window.addEventListener("keyup", (e)=>{
-            console.log(e.repeat)
             if(e.key === "e" && !e.repeat){
                 setEraserOn(false)
             }
@@ -46,42 +56,42 @@ export default function Map(props) {
         for(let j = 0; j < props.grid.cols; j++){
             const position = {}
 
-            const jDiff = j - clicked.row
-            const iDiff = i - clicked.col
+            const jDiff = j - dropped.row
+            const iDiff = i - dropped.col
             
-            if (j >= clicked.row && 
-                j <= clicked.row + rowDiff && 
-                i >= clicked.col &&
-                i <= clicked.col + colDiff &&
-                props.ready
+            if (j >= dropped.row && 
+                j <= dropped.row + rowDiff && 
+                i >= dropped.col &&
+                i <= dropped.col + colDiff 
             ){
                 position.row = rowStart + jDiff
                 position.col = colStart + iDiff
             } 
             rows.push(
-            <MapTile 
-                key={`${i}${j}`} 
-                i={i}
-                j={j}
-                position={position}
-                handleTileClick={setClicked}
-                setEraserOn={setEraserOn}
-                eraserOn={eraserOn}
-            />
+                <MapTile 
+                    key={`${i}${j}`} 
+                    i={i}
+                    j={j}
+                    position={position}
+                    handlePlacement={setDropped}
+                    setEraserOn={setEraserOn}
+                    eraserOn={eraserOn}
+                    isReset={isReset}
+                />
             )
         }
         map.push(<Fragment key={i}>{rows}</Fragment>)
     }
 
     return (
-        <>  
-            <Tooltip tip="toggle eraser with the e key. when on, hovering will reset map tile">
+        <>  <button onClick={handleReset}>Reset</button>
+            <Tooltip tip="Eraser is on while holding down the e key, or using the Eraser On button to toggle it. When on, hovering will reset map tile">
                 <button onClick={handleEraserToggle}>
                     {!eraserOn && "Turn"} Eraser {!eraserOn ? "On" : "Off"}
                 </button>
             </Tooltip>
             
-            <div onClick={()=>props.setReady(true)} style={styles}>
+            <div style={styles}>
                 {map}
             </div>
         </>

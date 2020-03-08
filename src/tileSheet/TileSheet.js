@@ -15,17 +15,15 @@ export default function TileSheet(props) {
     const [isMouseDown, setIsMouseDown] = useState(false)
     const [shouldSaveMap, setShouldSaveMap] = useState(false)
 
-    const {holdSelection, setIsDragging, setSelectionClickPosition, setPageXY} = useContext(SelectionContext)
+    const {holdSelection, setDraggingStage, setSelectionClickPosition, setPageXY} = useContext(SelectionContext)
 
     const handleMouseDown = (e, j, i, isInSelection, {x, y}) => {
-        console.log("mouse down", isInSelection, j, i)
         e.persist()
         if(isInSelection){
-            setIsDragging(true)
+            setDraggingStage("dragging")
             setSelectionClickPosition({x, y})
             setPageXY(e.pageX, e.pageY)
         } else {
-            props.setIsReadyToPlace(false)
             setIsMouseDown(true)
             props.handleMouseDown(j, i)
         }
@@ -106,7 +104,7 @@ export default function TileSheet(props) {
     }
     
     return (
-        <Tooltip tip="click a tile, or click and drag to selected a rectangle. Then click in the canvas to place terrain">
+        <Tooltip tip="click a tile, or click and drag to make a larger selection. Then drag the selection to the canvas or click in the canvas to place terrain">
             <div onMouseLeave={handleMouseUpOrLeave} className="tileSheet" >
                 {tileMap}
             </div>

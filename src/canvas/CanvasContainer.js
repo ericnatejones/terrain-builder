@@ -23,9 +23,7 @@ export default function CanvasContainer(props) {
                     {!tooltipOn && "Turn"} Tool Tips {!tooltipOn && "On"}
                 </button>
                 <Map grid={map} 
-                    setReady={props.setReady}
                     selected={props.selected} 
-                    ready={props.ready} 
                     areToolTipsOn={props.areToolTipsOn}/> 
             </div>
         </div>

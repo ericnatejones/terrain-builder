@@ -2,7 +2,11 @@ import React, {useContext} from 'react'
 import {SelectionContext} from "../context/selectionContext"
 
 export default function Selection() {
-    const {pageX, pageY, selection, selectionClickPosition} = useContext(SelectionContext)
+    const {pageX, pageY, selection, selectionClickPosition, setDraggingStage} = useContext(SelectionContext)
+
+    const handleMouseUp = () => {
+        setDraggingStage("ready to place")
+    }
 
     const style = {
         position: "absolute",
@@ -11,7 +15,7 @@ export default function Selection() {
     }
 
     return (
-        <div style={style}>
+        <div style={style} onMouseUp={handleMouseUp}>
             {selection}
         </div>
     )
