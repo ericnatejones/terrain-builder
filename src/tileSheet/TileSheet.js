@@ -59,7 +59,7 @@ At any time during the tutorial, you can enter "skip" in the prompt`)
             
             (type "skip" to skip this tutorial)`)
 
-            if(response?.toLowerCase() === "skip"){
+            if(response && response.toLowerCase() === "skip"){
                 setTutorialNumber(10)
             }
 
