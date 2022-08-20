@@ -91,7 +91,7 @@ export default function Map(props) {
                 </button>
             </Tooltip>
             
-            <div style={styles}>
+            <div style={styles} onMouseLeave={()=>setDropped({row: 33, col: 33})}>
                 {map}
             </div>
         </>
