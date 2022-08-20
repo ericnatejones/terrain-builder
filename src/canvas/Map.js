@@ -10,7 +10,7 @@ export default function Map(props) {
     const [eraserOn, setEraserOn] = useState(false)
     const [isReset, setIsReset] = useState(false)
 
-    const handleEraserToggle = () => {
+   const handleEraserToggle = () => {
         setEraserOn(prevEraser => !prevEraser)
         setDraggingStage("pre") 
         setDropped({row: 33, col: 33})
@@ -77,6 +77,8 @@ export default function Map(props) {
                     setEraserOn={setEraserOn}
                     eraserOn={eraserOn}
                     isReset={isReset}
+                    tutorialNumber={props.tutorialNumber}
+                    setTutorialNumber={props.setTutorialNumber}
                 />
             )
         }
@@ -91,7 +93,7 @@ export default function Map(props) {
                 </button>
             </Tooltip>
             
-            <div style={styles}>
+            <div style={styles} onMouseLeave={()=>setDropped({row: 33, col: 33})}>
                 {map}
             </div>
         </>

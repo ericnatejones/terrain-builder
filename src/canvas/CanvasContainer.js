@@ -24,7 +24,9 @@ export default function CanvasContainer(props) {
                 </button>
                 <Map grid={map} 
                     selected={props.selected} 
-                    areToolTipsOn={props.areToolTipsOn}/> 
+                    areToolTipsOn={props.areToolTipsOn}
+                    tutorialNumber={props.tutorialNumber}
+                    setTutorialNumber={props.setTutorialNumber}/> 
             </div>
         </div>
     )
